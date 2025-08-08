@@ -6,21 +6,21 @@ export const sendInvoice = async (req: Request, res: Response) => {
   const { customerName, mobile, paidAmount } = req.body;
 
   if (!customerName || !mobile || !req.body.products) {
-  return res.status(400).send('Invalid request body.');
-}
+    return res.status(400).send('Invalid request body.');
+  }
 
-const products: Product[] = req.body.products;
-let total = 0;
+  const products: Product[] = req.body.products;
+  let total = 0;
 
-const formatted = products.map(p => {
-  const subtotal = +p.quantity * +p.price;
-  total += subtotal;
-  return `${p.name.padEnd(14)} ${p.size.padEnd(6)} ${p.quantity.toString().padEnd(4)} ₹${p.price}`;
-}).join('\n');
+  const formatted = products.map(p => {
+    const subtotal = +p.quantity * +p.price;
+    total += subtotal;
+    return `${p.name.padEnd(14)} ${p.size.padEnd(6)} ${p.quantity.toString().padEnd(4)} ₹${p.price}`;
+  }).join('\n');
 
-const discount = total - paidAmount;
+  const discount = total - paidAmount;
 
-const customerMessage = `
+  const customerMessage = `
 🧾 *Mummy n me - Invoice*
 
 👤 *Customer:* ${customerName}

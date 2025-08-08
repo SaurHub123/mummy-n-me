@@ -1,88 +1,70 @@
-<!-- <!DOCTYPE html>
-<html>
-<head>
-  <title>Mummy n Me Billing</title>
-  <link rel="stylesheet" href="/style.css">
-</head>
-<body>
-  <div class="container">
-    <h2>Mummy n Me Billing</h2>
-    <form id="billingForm">
-      <input type="text" name="customerName" placeholder="Customer Name" required>
-      <input type="text" name="mobile" placeholder="WhatsApp Number" required>
-
-      <div id="products"></div>
-      <button type="button" onclick="addProduct()">Add Product</button>
-
-      <label>Total: ₹<span id="total">0</span></label>
-      <input type="number" name="paidAmount" placeholder="Paid Amount" required>
-      <button type="submit">Generate Invoice</button>
-    </form>
-  </div>
-  <script src="/script.js"></script>
-</body>
-</html> -->
-
-
-
-
-<!-- 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Billing Form</title>
-  <link rel="stylesheet" href="/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mummy n Me - Billing</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    .processing-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 50;
+      justify-content: center;
+      align-items: center;
+    }
+    .spinner {
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-top: 4px solid #3b82f6;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
 </head>
-<body>
-  <div class="container">
-    <h2>Mummy n Me - Billing</h2>
-    <form id="billingForm">
-      <input type="text" name="customerName" placeholder="Customer Name" required>
-      <input type="text" name="mobile" placeholder="WhatsApp Number" required>
-
-      <div id="product-list"></div>
-      <button type="button" onclick="addProduct()">Add Product</button>
-
-      <label>Total: ₹<span id="total">0</span></label>
-      <input type="number" name="paidAmount" placeholder="Paid Amount" required>
-      <button type="submit">Generate Invoice</button>
-    </form>
-  </div>
-  <script src="/script.js"></script>
-</body>
-</html> -->
-
-
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Billing Form</title>
-  <link rel="stylesheet" href="/style.css">
-</head>
-<body>
-  <div id="password-screen" class="password-container">
-    <div class="password-box">
-      <h2>Mummy n Me - Login</h2>
-      <input type="password" id="password-input" placeholder="Enter Password" required>
-      <button type="button" onclick="checkPassword()">Submit</button>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+  <div id="password-screen" class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
+      <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Mummy n Me - Login</h2>
+      <input type="password" id="password-input" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Enter Password" required>
+      <button type="button" onclick="checkPassword()" class="w-full mt-4 bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition">Submit</button>
     </div>
   </div>
-  <div id="billing-screen" class="container" style="display: none;">
-    <h2>Mummy n Me - Billing</h2>
-    <form id="billing-form">
-      <input type="text" name="customerName" placeholder="Customer Name" required>
-      <input type="text" name="mobile" placeholder="WhatsApp Number" required>
-      <div id="product-list"></div>
-      <button type="button" onclick="addProduct()" class="add-product-btn">Add Product</button>
-      <label>Total: ₹<span id="total">0</span></label>
-      <input type="number" name="paidAmount" placeholder="Paid Amount" required>
-      <button type="submit" class="submit-btn">Generate Invoice</button>
+  <div id="billing-screen" class="hidden container mx-auto p-6 max-w-3xl bg-white my-6 rounded-2xl shadow-lg">
+    <h2 class="text-3xl font-bold text-gray-800 text-center mb-6">Mummy n Me - Billing</h2>
+    <form id="billing-form" class="space-y-4">
+      <div>
+        <input type="text" name="customerName" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Customer Name" required>
+      </div>
+      <div>
+        <input type="tel" name="mobile" pattern="[0-9]{10}" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="WhatsApp Number (10 digits)" required>
+      </div>
+      <div id="product-list" class="space-y-4"></div>
+      <button type="button" onclick="addProduct()" class="w-full bg-green-500 text-white p-3 rounded-lg hover:bg-green-600 transition">Add Product</button>
+      <div class="flex justify-between items-center">
+        <label class="text-lg font-bold text-gray-800">Total: ₹<span id="total" class="text-green-600">0</span></label>
+        <input type="number" name="paidAmount" step="0.01" min="0" class="w-1/2 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Paid Amount" required>
+      </div>
+      <button type="submit" id="submit-btn" class="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition disabled:bg-gray-400 disabled:cursor-not-allowed">Generate Invoice</button>
     </form>
+    <div class="mt-6 text-center text-gray-600">
+      <p class="font-semibold">Mummy n Me</p>
+      <p>Jamuna Enclave, Zirakpur, Punjab</p>
+      <p class="mt-2">Designed and Developed by <a href="https://saurabh-codes.onrender.com/" class="text-blue-500 hover:underline">Saurabh Kumar</a></p>
+    </div>
+  </div>
+  <div id="processing-overlay" class="processing-overlay">
+    <div class="spinner"></div>
   </div>
   <script src="/script.js"></script>
 </body>
