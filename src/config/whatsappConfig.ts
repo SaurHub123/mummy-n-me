@@ -55,9 +55,8 @@ import fs from 'fs';
 
 // Configure persistent session directory
 // Uses Render's persistent storage if available, otherwise local directory
-const SESSION_DIR = process.env.RENDER 
-  ? '/opt/render/.render/whatsapp_session' 
-  : path.join(__dirname, 'whatsapp_session');
+const SESSION_DIR ='/opt/render/.render/whatsapp_session' 
+  // : path.join(__dirname, 'whatsapp_session');
 
 // Create directory if it doesn't exist
 if (!fs.existsSync(SESSION_DIR)) {
