@@ -8,7 +8,9 @@
     "build": "npx tsc",
     "postbuild": "npm run copy-assets",
     "copy-assets": "cpx \"src/views/**/*\" dist/views && cpx \"src/public/**/*\" dist/public",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "render-install": "npm install && sudo apt-get update && sudo apt-get install -y chromium-browser",
+    "render-start": "NODE_ENV=production node dist/server.js"
   },
   "keywords": [],
   "author": "",
