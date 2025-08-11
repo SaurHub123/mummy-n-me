@@ -48,7 +48,7 @@ ${formatted}
   try {
     // console.log(`${mobile}@c.us`, customerMessage);
     await client.sendMessage(`91${mobile}@c.us`, customerMessage);
-    await client.sendMessage('120363418463077263@g.us', groupMessage);
+    await client.sendMessage('120363418119116950@g.us', groupMessage);
     res.send('✅ Invoice sent successfully!');
   } catch (error) {
     console.error(error);
