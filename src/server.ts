@@ -33,7 +33,7 @@ app.get('/health', (req, res) => {
 setInterval(() => {
   const now = new Date();
 
-  fetch(`http://localhost:${PORT}/health`)
+  fetch(`https://billing-9qdj.onrender.com/health`)
     .then(async (response) => {
       const data = await response.text(); // or .json() if you expect JSON
       console.log(`[${now.toISOString()}] Health check successful.`);
